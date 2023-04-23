@@ -3,7 +3,7 @@ import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 
 const app = express();
-
+app.use(express.static(__dirname + '/public'));
 const httpServer = createServer(app);
 
 const io = new Server(httpServer);
