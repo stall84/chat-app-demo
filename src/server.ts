@@ -1,11 +1,27 @@
-// const express = require("express");
-// const app = express();
-// const http = require("node:http").Server(app);
-// const io = require("socket.io")(http);
+import express from 'express';
+import { createServer } from 'http';
+import { Server, Socket } from 'socket.io';
 
-import express = require("express");
 const app = express();
-import http = require("http");
-import io = require("socket.io");
+app.use(express.static(__dirname + '/public'));
+const httpServer = createServer(app);
 
-// app.use(express.static(__dirname + '/public'));
+const io = new Server(httpServer);
+
+io.on("connection", (socket: Socket) => {
+    console.log('User Connected ...');
+    console.log('w/ socketID: ', socket.id)
+
+    socket.on("disconnect", () => {
+        console.log('User Disconnected ...')
+    });
+
+    socket.on("message", (message: any) => {
+        console.log('Message Received: ', message);
+        io.emit("message: ", message);
+    })
+});
+
+httpServer.listen(3009, () => {
+    console.log(' Server running on port 3009...')
+});
