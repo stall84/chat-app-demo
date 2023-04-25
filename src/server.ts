@@ -6,9 +6,9 @@ const app = express();
 app.use(express.static(__dirname + '/public'));
 const httpServer = createServer(app);
 
-const io = new Server(httpServer);
+export const serverIo = new Server(httpServer);
 
-io.on("connection", (socket: Socket) => {
+serverIo.on("connection", (socket: Socket) => {
     console.log('User Connected ...');
     console.log('w/ socketID: ', socket.id)
 
@@ -18,7 +18,7 @@ io.on("connection", (socket: Socket) => {
 
     socket.on("message", (message: any) => {
         console.log('Message Received: ', message);
-        io.emit("message: ", message);
+        serverIo.emit("message: ", message);
     })
 });
 
