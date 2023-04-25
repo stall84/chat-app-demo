@@ -8,7 +8,9 @@ const socket = io(connectionUrl);
 describe('Check basic send and receive of messages', () => {
     let client1: any, client2: any;
 
-    // We have the server now. Fix this
+    // Check Jest example in socket.io testing-docs
+    // Remember OP did not import his server.
+
     beforeEach((done: any) => {
         client1 = socket.connect();
         client2 = socket.connect();
